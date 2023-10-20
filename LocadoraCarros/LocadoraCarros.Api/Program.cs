@@ -1,3 +1,4 @@
+using LocadoraCarros.Api.Configuracao;
 using LocadoraCarros.Application;
 using Microsoft.OpenApi.Models;
 
@@ -28,5 +29,6 @@ app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseAuthorization();
 app.UseRouting();
 app.MapControllers();
+app.UseMiddleware(typeof(ExceptionMiddleware));
 
 app.Run();

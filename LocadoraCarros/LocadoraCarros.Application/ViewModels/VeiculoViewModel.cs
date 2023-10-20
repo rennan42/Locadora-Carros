@@ -1,12 +1,13 @@
 ﻿using LocadoraCarros.Domain.Enum;
 
-namespace LocadoraCarros.Domain.Entidades
+namespace LocadoraCarros.Application.ViewModels
 {
-    public class Veiculo : Entidade
+    public class VeiculoViewModel
     {
+        public long Id { get; set; }
         public EModeloVeiculo Modelo { get; set; }
         public DateTime DataCadastro { get; set; }
         public string Placa { get; set; }
-        public EStatusVeiculo Status { get; set;}
+        public EStatusVeiculo Status { get; set; }
     }
 }

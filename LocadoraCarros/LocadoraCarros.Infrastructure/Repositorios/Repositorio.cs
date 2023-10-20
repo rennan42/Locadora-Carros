@@ -1,17 +1,10 @@
 ﻿using LocadoraCarros.Domain.Entidades;
+using LocadoraCarros.Domain.Repositorios;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraCarros.Infrastructure.Repositorios
 {
-    public interface IRepositorio<TEntity> : IDisposable where TEntity : Entidade
-    {
-        Task Adicionar(TEntity entity);
-        Task<TEntity> ObterPorId(long id);
-        Task<List<TEntity>> ObterTodos();
-        Task Atualizar(TEntity entity);
-        Task Remover(long id);
-        Task<int> SaveChanges();
-    }
+   
     public abstract class Repositorio<TEntity> : IRepositorio<TEntity> where TEntity : Entidade, new()
     {
         protected readonly Contexto Db;

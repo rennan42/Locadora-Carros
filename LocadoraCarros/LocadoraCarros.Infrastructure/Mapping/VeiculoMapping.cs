@@ -13,12 +13,11 @@ namespace LocadoraCarros.Infrastructure.Mapping
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Modelo)
-                   .IsRequired()
-                   .HasColumnType("varchar(100)");
+                   .IsRequired();
 
             builder.Property(p => p.Placa)
                    .IsRequired()
-                   .HasColumnType("varchar(100)");
+                   .HasColumnType("varchar(7)");
 
             builder.Property(p => p.DataCadastro)
                   .IsRequired();
