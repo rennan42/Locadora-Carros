@@ -16,8 +16,4 @@
     <ProjectReference Include="..\LocadoraCarros.Infrastructure\LocadoraCarros.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Veiculos\Consultas\ListarVeiculosPorStatus\" />
-  </ItemGroup>
-
 </Project>

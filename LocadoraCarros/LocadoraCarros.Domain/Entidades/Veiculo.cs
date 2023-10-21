@@ -4,9 +4,14 @@ namespace LocadoraCarros.Domain.Entidades
 {
     public class Veiculo : Entidade
     {
-        public EModeloVeiculo Modelo { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public string Placa { get; set; }
-        public EStatusVeiculo Status { get; set;}
+        public EModeloVeiculo Modelo { get; private set; }
+        public DateTime DataCadastro { get; private set; }
+        public string Placa { get; private set; }
+        public EStatusVeiculo Status { get; private set;}
+
+        public void AtualizarStatus(EStatusVeiculo status)
+        {
+            Status = status;
+        }
     }
 }

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace LocadoraCarros.Application.Veiculos.Consultas.ListarVeiculosPorModelo
 {
-    public class ListarVeiculosPorModeloComando : IRequest<IList<VeiculoViewModel>>
+    public class ListarVeiculosPorModeloConsulta : IRequest<IList<VeiculoViewModel>>
     {
         public EModeloVeiculo Modelo { get; set; }
     }

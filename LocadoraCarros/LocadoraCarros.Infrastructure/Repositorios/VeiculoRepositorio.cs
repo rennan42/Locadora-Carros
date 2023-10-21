@@ -31,5 +31,18 @@ namespace LocadoraCarros.Infrastructure.Repositorios
                               .Where(p => p.Status == status)
                               .ToListAsync();
         }
+
+        public async Task<bool> AtualizarStatus(string placa, EStatusVeiculo status)
+        {
+            var veiculo = await DbSet.SingleOrDefaultAsync(p => p.Placa == placa);
+
+            if (veiculo == null)
+                return false;
+
+            veiculo.AtualizarStatus(status);
+            await Db.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

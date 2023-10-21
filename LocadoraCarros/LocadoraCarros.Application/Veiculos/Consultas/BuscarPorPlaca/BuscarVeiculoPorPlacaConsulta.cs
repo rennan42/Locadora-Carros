@@ -3,7 +3,7 @@ using MediatR;
 
 namespace LocadoraCarros.Application.Veiculos.Consultas.BuscarPorPlaca
 {
-    public class BuscarVeiculoPorPlacaComando : IRequest<VeiculoViewModel>
+    public class BuscarVeiculoPorPlacaConsulta : IRequest<VeiculoViewModel>
     {
         public string Placa { get; set; }
     }
