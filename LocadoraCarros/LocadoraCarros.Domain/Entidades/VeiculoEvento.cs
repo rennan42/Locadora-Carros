@@ -18,5 +18,28 @@ namespace LocadoraCarros.Domain.Entidades
         {
                 
         }
+
+        public string GerarMensagemEvento()
+        {
+            string mensagemPorAcao = "";
+            switch (Acao)
+            {
+                case EAcaoVeiculoEvento.SALVO:
+                    mensagemPorAcao = $@"foi salvo dia {Data:dd//MM//yyyy}";
+                    break;
+                case EAcaoVeiculoEvento.DEVOLVIDO:
+                    mensagemPorAcao = $@"foi devolvido dia {Data:dd//MM//yyyy}";
+                    break;
+                case EAcaoVeiculoEvento.LOCADO:
+                    mensagemPorAcao = $@"foi locado dia {Data:dd//MM//yyyy}";
+                    break;
+                case EAcaoVeiculoEvento.REMOVIDO:
+                    mensagemPorAcao = $@"foi removido dia {Data:dd//MM//yyyy}";
+                    break;
+                default:
+                    break;
+            }
+            return $@"Veículo {PlacaVeiculo} {mensagemPorAcao}";
+        }
     }
 }

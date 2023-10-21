@@ -1,5 +1,6 @@
 ﻿using LocadoraCarros.Domain.Entidades;
 using LocadoraCarros.Domain.Repositorios;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraCarros.Infrastructure.Repositorios
 {
@@ -8,6 +9,13 @@ namespace LocadoraCarros.Infrastructure.Repositorios
         public VeiculoEventoRepositorio(Contexto contexto) : base(contexto)
         {
 
+        }
+
+        public async Task<IList<VeiculoEvento>> ListarEventos(string placa)
+        {
+            return await DbSet.AsNoTracking()
+                              .Where(p => p.PlacaVeiculo == placa)
+                              .ToListAsync();
         }
     }
 }

@@ -2,6 +2,7 @@
 using LocadoraCarros.Application.Veiculos.Comandos.Criar;
 using LocadoraCarros.Application.Veiculos.Comandos.Remover;
 using LocadoraCarros.Application.Veiculos.Consultas.BuscarPorPlaca;
+using LocadoraCarros.Application.Veiculos.Consultas.ListarEventos;
 using LocadoraCarros.Application.Veiculos.Consultas.ListarVeiculosPorModelo;
 using LocadoraCarros.Application.Veiculos.Consultas.ListarVeiculosPorStatus;
 using LocadoraCarros.Application.ViewModels;
@@ -78,6 +79,12 @@ namespace LocadoraCarros.Api.Controllers
         {
             await _mediator.Send(new RemoverVeiculoComando { Id = id });
             return NoContent();
+        }
+
+        [HttpGet("listarEventos/{placa}")]
+        public async Task<ActionResult> ListarEventos(string placa)
+        {
+            return Ok(await _mediator.Send(new ListarEventosVeiculoConsulta { Placa = placa }));
         }
     }
 }
