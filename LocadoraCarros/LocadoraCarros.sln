@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.Api", "LocadoraCarros.Api\LocadoraCarros.Api.csproj", "{E70E4197-2406-468C-B37F-6F3623079C0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Api", "LocadoraCarros.Api\LocadoraCarros.Api.csproj", "{E70E4197-2406-468C-B37F-6F3623079C0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.Domain", "LocadoraCarros.Domain\LocadoraCarros.Domain.csproj", "{955F1217-C7E2-47DA-930E-D4E8BE6A54AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Domain", "LocadoraCarros.Domain\LocadoraCarros.Domain.csproj", "{955F1217-C7E2-47DA-930E-D4E8BE6A54AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.Application", "LocadoraCarros.Application\LocadoraCarros.Application.csproj", "{9CB6A21D-C590-4444-9B3B-0ED17696E9D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Application", "LocadoraCarros.Application\LocadoraCarros.Application.csproj", "{9CB6A21D-C590-4444-9B3B-0ED17696E9D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.Infrastructure", "LocadoraCarros.Infrastructure\LocadoraCarros.Infrastructure.csproj", "{267CEEB5-2ADD-4177-B722-2C2CE46B9431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Infrastructure", "LocadoraCarros.Infrastructure\LocadoraCarros.Infrastructure.csproj", "{267CEEB5-2ADD-4177-B722-2C2CE46B9431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.UnitTests", "LocadoraCarros.UnitTests\LocadoraCarros.UnitTests.csproj", "{92A1A074-91F4-4EE7-B003-1EBC5A711EC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.Tests.Shared", "LocadoraCarros.Tests.Shared\LocadoraCarros.Tests.Shared.csproj", "{3B088741-00FD-4623-8728-455C46593977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{267CEEB5-2ADD-4177-B722-2C2CE46B9431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{267CEEB5-2ADD-4177-B722-2C2CE46B9431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{267CEEB5-2ADD-4177-B722-2C2CE46B9431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A1A074-91F4-4EE7-B003-1EBC5A711EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A1A074-91F4-4EE7-B003-1EBC5A711EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A1A074-91F4-4EE7-B003-1EBC5A711EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A1A074-91F4-4EE7-B003-1EBC5A711EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B088741-00FD-4623-8728-455C46593977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B088741-00FD-4623-8728-455C46593977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B088741-00FD-4623-8728-455C46593977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B088741-00FD-4623-8728-455C46593977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

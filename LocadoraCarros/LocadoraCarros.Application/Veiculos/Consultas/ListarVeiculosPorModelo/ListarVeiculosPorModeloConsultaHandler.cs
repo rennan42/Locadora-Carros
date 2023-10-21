@@ -5,7 +5,7 @@ using MediatR;
 
 namespace LocadoraCarros.Application.Veiculos.Consultas.ListarVeiculosPorModelo
 {
-    internal class ListarVeiculosPorModeloConsultaHandler : IRequestHandler<ListarVeiculosPorModeloConsulta, IList<VeiculoViewModel>>
+    public class ListarVeiculosPorModeloConsultaHandler : IRequestHandler<ListarVeiculosPorModeloConsulta, IList<VeiculoViewModel>>
     {
         private readonly IVeiculoRepositorio _veiculoRepositorio;
         private readonly IMapper _mapper;
