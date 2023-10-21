@@ -9,5 +9,6 @@ namespace LocadoraCarros.Domain.Repositorios
         Task<Veiculo?> BuscarPorPlaca(string placa);
         Task<IList<Veiculo>> ListarPorStatus(EStatusVeiculo status);
         Task<bool> AtualizarStatus(string placa, EStatusVeiculo status);
+        Task<string> ConsultarPlacaPorId(long id);
     }
 }

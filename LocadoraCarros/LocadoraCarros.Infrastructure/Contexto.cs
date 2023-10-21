@@ -10,6 +10,7 @@ namespace LocadoraCarros.Infrastructure
 
         }
         public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<VeiculoEvento> VeiculoEventos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

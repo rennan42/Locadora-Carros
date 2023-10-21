@@ -44,5 +44,13 @@ namespace LocadoraCarros.Infrastructure.Repositorios
 
             return true;
         }
+
+        public async Task<string> ConsultarPlacaPorId(long id)
+        {
+            return await DbSet.AsNoTracking()
+                              .Where(p => p.Id == id)
+                              .Select(p => p.Placa)
+                              .FirstAsync();
+        }
     }
 }
