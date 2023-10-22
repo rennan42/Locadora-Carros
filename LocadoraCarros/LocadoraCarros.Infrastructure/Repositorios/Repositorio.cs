@@ -16,27 +16,15 @@ namespace LocadoraCarros.Infrastructure.Repositorios
             DbSet = db.Set<TEntity>();
         }
 
-
         public async Task Adicionar(TEntity entity)
         {
             DbSet.Add(entity);
             await SaveChanges();
         }
 
-        public async Task Atualizar(TEntity entity)
-        {
-            DbSet.Update(entity);
-            await SaveChanges();
-        }
-
         public async Task<TEntity> ObterPorId(long id)
         {
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        public async Task<List<TEntity>> ObterTodos()
-        {
-            return await DbSet.ToListAsync();
         }
 
         public async Task Remover(long id)

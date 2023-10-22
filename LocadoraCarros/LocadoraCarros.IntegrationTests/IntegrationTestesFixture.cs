@@ -1,6 +1,10 @@
-﻿using LocadoraCarros.Infrastructure;
+﻿using FluentAssertions;
+using LocadoraCarros.Api.Configuracao;
+using LocadoraCarros.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace LocadoraCarros.IntegrationTests
 {
@@ -27,6 +31,14 @@ namespace LocadoraCarros.IntegrationTests
             Client = _factory.CreateClient(clientOptions);
             _context.Veiculos.RemoveRange(_context.Veiculos);
             _context.VeiculoEventos.RemoveRange(_context.VeiculoEventos);
+        }
+
+        protected static void ValidarMensagemErro(List<string> respostaEsperada, HttpResponseMessage response)
+        {
+            var result = response.Content.ReadAsStringAsync().Result;
+            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
         }
         public void Dispose()
         {

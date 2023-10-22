@@ -6,8 +6,6 @@ namespace LocadoraCarros.Domain.Repositorios
     {
         Task Adicionar(TEntity entity);
         Task<TEntity> ObterPorId(long id);
-        Task<List<TEntity>> ObterTodos();
-        Task Atualizar(TEntity entity);
         Task Remover(long id);
         Task<int> SaveChanges();
     }

@@ -14,7 +14,7 @@ namespace LocadoraCarros.Tests.Shared.Builders
         {
             return new Faker<Veiculo>()
                 .RuleFor(p => p.Modelo, f => modelo ?? (EModeloVeiculo)f.Random.Int(0,2))
-                .RuleFor(p => p.DataCadastro, f => dataCadastro ?? DateTime.Now)
+                .RuleFor(p => p.DataCadastro, f => dataCadastro ?? DateTime.Now.AddMinutes(10))
                 .RuleFor(p => p.Status, f => status ?? (EStatusVeiculo)f.Random.Int(0, 1))
                 .RuleFor(p => p.Placa, f => placa ?? "RIO2B25")
                 .Generate();
@@ -23,7 +23,7 @@ namespace LocadoraCarros.Tests.Shared.Builders
         {
             return new Faker<Veiculo>()
                 .RuleFor(p => p.Modelo, f => modelo ?? (EModeloVeiculo)f.Random.Int(0, 2))
-                .RuleFor(p => p.DataCadastro, f => dataCadastro ?? DateTime.Now)
+                .RuleFor(p => p.DataCadastro, f => dataCadastro ?? DateTime.Now.AddMinutes(10))
                 .RuleFor(p => p.Status, f => status ?? (EStatusVeiculo)f.Random.Int(0, 1))
                 .RuleFor(p => p.Placa, f => placa ?? "RIO2B25")
                 .Generate(quantidade);

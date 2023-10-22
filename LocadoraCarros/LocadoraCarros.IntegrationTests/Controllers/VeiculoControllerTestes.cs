@@ -16,8 +16,8 @@ namespace LocadoraCarros.IntegrationTests.Controllers
     public class VeiculoControllerTestes : IntegrationTestesFixture
     {
         #region Criar Veiculo
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera criar um veiculo.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá criar um veículo.")]
         public async Task DeveraCriarUmVeiculo()
         {
             var request = new CriarVeiculoComando
@@ -27,12 +27,6 @@ namespace LocadoraCarros.IntegrationTests.Controllers
                 Placa = "RIO2C55",
                 Status = EStatusVeiculo.ALUGADO
             };
-            var veiculoEsperado = new VeiculoBuilder()
-                                        .ComPlaca(request.Placa)
-                                        .ComModelo(request.Modelo)
-                                        .ComStatus(request.Status)
-                                        .ComDataCadastro(request.DataCadastro)
-                                        .Create();
 
             var response = await Client.PostAsJsonAsync("/api/veiculo", request);
             var result = response.Content.ReadAsStringAsync().Result;
@@ -42,7 +36,7 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             veiculoCriado.Should().NotBeNull();
             veiculoCriado.Id.Should().BeGreaterThan(0);
         }
-        [Trait("Integracao", "Veiculo")]
+        [Trait("Integracao", "Veículo")]
         [Fact(DisplayName = "Comando - Deverá Retornar mensagem de erro de modelo não permitido.")]
         public async Task DeveraRetornarMensagemErroModeloNaoPermitido()
         {
@@ -53,18 +47,16 @@ namespace LocadoraCarros.IntegrationTests.Controllers
                 Placa = "RIO2C55",
                 Status = EStatusVeiculo.ALUGADO
             };
-            var response = await Client.PostAsJsonAsync("/api/veiculo", request);
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Modelo não permitido, escolha um modelo válido: 1-Hatch, 2-Sedan, 3-SUV.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+            var response = await Client.PostAsJsonAsync("/api/veiculo", request);
+
+            ValidarMensagemErro(respostaEsperada, response);
         }
 
-        [Trait("Integracao", "Veiculo")]
+        [Trait("Integracao", "Veículo")]
         [Fact(DisplayName = "Comando - Deverá Retornar mensagem de erro formato de placa inválido.")]
         public async Task DeveraRetornarMensagemErroFormatoPlacaInvalida()
         {
@@ -76,17 +68,15 @@ namespace LocadoraCarros.IntegrationTests.Controllers
                 Status = EStatusVeiculo.ALUGADO
             };
             var response = await Client.PostAsJsonAsync("/api/veiculo", request);
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Formato da placa inválido.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+
+            ValidarMensagemErro(respostaEsperada, response);
         }
 
-        [Trait("Integracao", "Veiculo")]
+        [Trait("Integracao", "Veículo")]
         [Fact(DisplayName = "Comando - Deverá Retornar mensagem de erro Data inferior a atual.")]
         public async Task DeveraRetornarMensagemErroDataInferiorAtual()
         {
@@ -98,17 +88,14 @@ namespace LocadoraCarros.IntegrationTests.Controllers
                 Status = EStatusVeiculo.ALUGADO
             };
             var response = await Client.PostAsJsonAsync("/api/veiculo", request);
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Data não pode ser inferior a data atual.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+            ValidarMensagemErro(respostaEsperada, response);
         }
 
-        [Trait("Integracao", "Veiculo")]
+        [Trait("Integracao", "Veículo")]
         [Fact(DisplayName = "Comando - Deverá Retornar mensagem de erro status não permitido.")]
         public async Task DeveraRetornarMensagemErroStatusNaoPermitido()
         {
@@ -120,28 +107,21 @@ namespace LocadoraCarros.IntegrationTests.Controllers
                 Status = (EStatusVeiculo)5
             };
             var response = await Client.PostAsJsonAsync("/api/veiculo", request);
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Status não permitido, escolha um modelo válido: 1-Disponivel, 2-Alugado.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+            ValidarMensagemErro(respostaEsperada, response);
         }
         #endregion
 
         #region Atualizar Status
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera Atualizar status do veiculo.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá Atualizar status do veículo.")]
         public async Task DeveraAtualizarStatusVeiculo()
         {
-            var veiculo = new VeiculoBuilder()
-                                        .ComPlaca("RIO2C59")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.ALUGADO)
-                                        .ComDataCadastro(DateTime.Now.AddMinutes(10))
-                                        .Create();
+            var veiculo = new VeiculoBuilder().ComStatus(EStatusVeiculo.ALUGADO)
+                                              .Create();
 
             _context.Veiculos.Add(veiculo);
             await _context.SaveChangesAsync();
@@ -168,16 +148,12 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             veiculoStatusAtualizado.Status.Should().Be(EStatusVeiculo.DISPONIVEL);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera retornar mensagem de erro ao Atualizar status do veiculo com placa inexistente.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá retornar mensagem de erro ao Atualizar status do veículo com placa inexistente.")]
         public async Task DeveraRetornarMensagemErroAtualizarStatusVeiculoPlacaInexistente()
         {
-            var veiculo = new VeiculoBuilder()
-                                        .ComPlaca("RIO2C59")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.ALUGADO)
-                                        .ComDataCadastro(DateTime.Now.AddMinutes(10))
-                                        .Create();
+            var veiculo = new VeiculoBuilder().ComPlaca("RIO2C59")
+                                              .Create();
 
             _context.Veiculos.Add(veiculo);
             await _context.SaveChangesAsync();
@@ -202,8 +178,8 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             result.Should().Be(respostaEsperada);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera retornar mensagem de erro ao Atualizar status do veiculo com status inválido.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá retornar mensagem de erro ao Atualizar status do veículo com status inválido.")]
         public async Task DeveraRetornarMensagemErroAtualizarStatusVeiculoStatusInvalido()
         {
             var comando = new AtualizarStatusVeiculoComando
@@ -220,34 +196,26 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             };
 
             var response = await Client.SendAsync(request);
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Não foi possível atualizar a placa para o status informado.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+
+            ValidarMensagemErro(respostaEsperada, response);
         }
         #endregion
 
         #region ListarPorModelo
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera listar veiculos por modelo.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá listar veículos por modelo.")]
         public async Task DeveraListarVeiculosPorModelo()
         {
             var veiculosEsperados = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A10")
                                         .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .CreateMany(5);
 
             var veiculosNaoEsperados = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A10")
                                         .ComModelo(EModeloVeiculo.SUV)
-                                        .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .CreateMany(5);
             veiculosEsperados.Concat(veiculosNaoEsperados);
 
@@ -262,39 +230,31 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             veiculosPorModelo.Should().NotBeNull();
             veiculosPorModelo.Should().OnlyContain(p => p.Modelo == EModeloVeiculo.SEDAN);
         }
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera retornar no content ao listar veiculos por modelo.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá retornar no content ao listar veículos por modelo.")]
         public async Task DeveraRetornarNoContentListarVeiculosPorModelo()
         {
             var veiculosEsperados = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A10")
                                         .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .CreateMany(5);
-
 
             _context.Veiculos.AddRange(veiculosEsperados);
             await _context.SaveChangesAsync();
 
             var response = await Client.GetAsync($@"/api/veiculo/modelo/{EModeloVeiculo.SUV}");
             var result = response.Content.ReadAsStringAsync().Result;
-            var veiculosPorModelo = JsonConvert.DeserializeObject<IList<VeiculoViewModel>>(result);
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
         #endregion
 
         #region BuscarPorPlaca
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera buscar veiculo por placa.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá buscar veículo por placa.")]
         public async Task DeveraBuscarVeiculosPorPlaca()
         {
             var veiculo = new VeiculoBuilder()
                                         .ComPlaca("RIO2A44")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .Create();
 
             _context.Veiculos.Add(veiculo);
@@ -309,15 +269,12 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             vaiculoPorPlaca.Placa.Should().Be(veiculo.Placa);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera retornar mensagem de erro ao buscar veiculo por placa inexistente.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá retornar mensagem de erro ao buscar veículo por placa inexistente.")]
         public async Task DeveraRetornarMensagemErroBuscarVeiculosPorPlaca()
         {
             var veiculo = new VeiculoBuilder()
                                         .ComPlaca("RIO2A44")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
-                                        .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .Create();
 
             _context.Veiculos.Add(veiculo);
@@ -332,22 +289,16 @@ namespace LocadoraCarros.IntegrationTests.Controllers
         #endregion
 
         #region ListarPorStatus
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera listar veiculo por status.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá listar veículos por status.")]
         public async Task DeveraListarVeiculosPorStatus()
         {
             var veiculosDisponiveis = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A88")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
                                         .ComStatus(EStatusVeiculo.DISPONIVEL)
-                                        .ComDataCadastro(DateTime.Now)
                                         .CreateMany(5);
 
             var veiculosAlugados = new VeiculoBuilder()
-                                       .ComPlaca("RIO2A88")
-                                       .ComModelo(EModeloVeiculo.SEDAN)
                                        .ComStatus(EStatusVeiculo.ALUGADO)
-                                       .ComDataCadastro(DateTime.Now)
                                        .CreateMany(5);
 
             veiculosDisponiveis.Concat(veiculosAlugados);
@@ -364,8 +315,8 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             veiculosDisponiveis.Should().OnlyContain(p => p.Status == EStatusVeiculo.DISPONIVEL);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Consulta - Devera retornar mensagem de erro ao buscar veiculo por status inexistente.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Consulta - Deverá retornar mensagem de erro ao buscar veículos por status inexistente.")]
         public async Task DeveraRetornarMensagemErroBuscarVeiculosPorStatus()
         {
             var veiculo = new VeiculoBuilder()
@@ -387,12 +338,11 @@ namespace LocadoraCarros.IntegrationTests.Controllers
         #endregion
 
         #region Remover
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera remover um veiculo.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá remover um veículo.")]
         public async Task DeveraRemoverUmVeiculo()
         {
-            var veiculo = new VeiculoBuilder().ComPlaca("RIO2A25")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
+            var veiculo = new VeiculoBuilder()
                                         .ComStatus(EStatusVeiculo.DISPONIVEL)
                                         .ComDataCadastro(DateTime.Now.AddDays(-20))
                                         .Create();
@@ -406,13 +356,11 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera retornar mensagem de erro ao remover um veiculo alugado.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá retornar mensagem de erro ao remover um veículo alugado.")]
         public async Task DeveraRetornarMensagemErroRemoverUmVeiculoAlugado()
         {
             var veiculo = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A55")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
                                         .ComStatus(EStatusVeiculo.ALUGADO)
                                         .ComDataCadastro(DateTime.Now.AddDays(20))
                                         .Create();
@@ -422,23 +370,18 @@ namespace LocadoraCarros.IntegrationTests.Controllers
 
             var response = await Client.DeleteAsync($@"/api/veiculo/remover/{veiculo.Id}");
 
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Não foi possível continuar com a remoção deste veículo.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+            ValidarMensagemErro(respostaEsperada, response);
         }
 
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Comando - Devera retornar mensagem de erro ao remover um veiculo com menos de 15 dias.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Comando - Deverá retornar mensagem de erro ao remover um veículo com menos de 15 dias.")]
         public async Task DeveraRetornarMensagemErroRemoverUmVeiculoMenosQuinzeDias()
         {
             var veiculo = new VeiculoBuilder()
-                                        .ComPlaca("RIO2A57")
-                                        .ComModelo(EModeloVeiculo.SEDAN)
                                         .ComStatus(EStatusVeiculo.DISPONIVEL)
                                         .ComDataCadastro(DateTime.Now)
                                         .Create();
@@ -448,44 +391,39 @@ namespace LocadoraCarros.IntegrationTests.Controllers
 
             var response = await Client.DeleteAsync($@"/api/veiculo/remover/{veiculo.Id}");
 
-            var result = response.Content.ReadAsStringAsync().Result;
-            var respostaValidacao = JsonConvert.DeserializeObject<RespostaException>(result);
             var respostaEsperada = new List<string>
             {
                 "Não foi possível continuar com a remoção deste veículo.",
             };
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            respostaValidacao.Errors.Select(p => p.Mensagem).Should().Equal(respostaEsperada);
+            ValidarMensagemErro(respostaEsperada, response);
         }
         #endregion
 
         #region ListarEventos
-        [Trait("Integracao", "Veiculo")]
-        [Fact(DisplayName = "Evento - Devera listar eventos do veiculo por placa.")]
+        [Trait("Integracao", "Veículo")]
+        [Fact(DisplayName = "Evento - Deverá listar eventos do veículos por placa.")]
         public async Task DeveraListarEventosVeiculosPorPlaca()
         {
+            var placaEventos = "RIO5A88";
             var eventosEsperados = new List<string>
             {
-               $@"Veículo RIO5A88 foi salvo dia {DateTime.Now:dd//MM//yyyy}",
-               $@"Veículo RIO5A88 foi locado dia {DateTime.Now:dd//MM//yyyy}",
-               $@"Veículo RIO5A88 foi devolvido dia {DateTime.Now:dd//MM//yyyy}",
+               $@"Veículo {placaEventos} foi salvo dia {DateTime.Now:dd//MM//yyyy}",
+               $@"Veículo {placaEventos} foi locado dia {DateTime.Now:dd//MM//yyyy}",
+               $@"Veículo {placaEventos} foi devolvido dia {DateTime.Now:dd//MM//yyyy}",
             };
             var eventoSalvo = new VeiculoEventoBuilder()
-                                        .ComPlaca("RIO5A88")
-                                        .ComAcao(EAcaoVeiculoEvento.SALVO)
-                                        .ComDataCadastro(DateTime.Now)
-                                        .Create();
+                                    .ComPlaca(placaEventos)
+                                    .ComAcao(EAcaoVeiculoEvento.SALVO)
+                                    .Create();
 
             var eventoLocado = new VeiculoEventoBuilder()
-                                        .ComPlaca("RIO5A88")
+                                        .ComPlaca(placaEventos)
                                         .ComAcao(EAcaoVeiculoEvento.LOCADO)
-                                        .ComDataCadastro(DateTime.Now)
                                         .Create();
 
             var eventoDevolvido = new VeiculoEventoBuilder()
-                                        .ComPlaca("RIO5A88")
+                                        .ComPlaca(placaEventos)
                                         .ComAcao(EAcaoVeiculoEvento.DEVOLVIDO)
-                                        .ComDataCadastro(DateTime.Now)
                                         .Create();
 
             var listaEventos = new List<VeiculoEvento> { eventoSalvo, eventoLocado, eventoDevolvido };

@@ -22,7 +22,7 @@ namespace LocadoraCarros.Infrastructure.Repositorios
         public async Task<Veiculo?> BuscarPorPlaca(string placa)
         {
             return await DbSet.AsNoTracking()
-                              .SingleOrDefaultAsync(p => p.Placa == placa);
+                              .FirstOrDefaultAsync(p => p.Placa == placa);
         }
 
         public async Task<IList<Veiculo>> ListarPorStatus(EStatusVeiculo status)
@@ -34,7 +34,7 @@ namespace LocadoraCarros.Infrastructure.Repositorios
 
         public async Task<bool> AtualizarStatus(string placa, EStatusVeiculo status)
         {
-            var veiculo = await DbSet.SingleOrDefaultAsync(p => p.Placa == placa);
+            var veiculo = await DbSet.FirstOrDefaultAsync(p => p.Placa == placa);
 
             if (veiculo == null)
                 return false;

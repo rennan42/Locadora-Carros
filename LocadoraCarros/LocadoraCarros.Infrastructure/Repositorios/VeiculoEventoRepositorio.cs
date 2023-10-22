@@ -15,6 +15,7 @@ namespace LocadoraCarros.Infrastructure.Repositorios
         {
             return await DbSet.AsNoTracking()
                               .Where(p => p.PlacaVeiculo == placa)
+                              .OrderBy(p => p.Data)
                               .ToListAsync();
         }
     }
