@@ -2,7 +2,7 @@
 {
     public enum EStatusVeiculo
     {
-        DISPONIVEL = 0,
-        ALUGADO = 1
+        DISPONIVEL = 1,
+        ALUGADO = 2
     }
 }

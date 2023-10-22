@@ -2,9 +2,9 @@
 {
     public enum EAcaoVeiculoEvento
     {
-        SALVO = 0,
-        LOCADO = 1,
-        DEVOLVIDO = 2,
-        REMOVIDO = 3,
+        SALVO = 1,
+        LOCADO = 2,
+        DEVOLVIDO = 3,
+        REMOVIDO = 4,
     }
 }

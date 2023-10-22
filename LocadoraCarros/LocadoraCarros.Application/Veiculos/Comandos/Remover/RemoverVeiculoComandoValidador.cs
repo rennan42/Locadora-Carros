@@ -21,7 +21,7 @@ namespace LocadoraCarros.Application.Veiculos.Comandos.Remover
         {
             var veiculo = await _veiculoRepositorio.ObterPorId(id);
 
-            return veiculo.Status != EStatusVeiculo.ALUGADO || DateTime.Now >= veiculo.DataCadastro.AddDays(15);
+            return veiculo.Status != EStatusVeiculo.ALUGADO && DateTime.Now >= veiculo.DataCadastro.AddDays(15);
         }
     }
 }

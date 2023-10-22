@@ -18,13 +18,13 @@ namespace LocadoraCarros.Tests.Shared.Builders
                 .Generate();
         }
 
-        public IList<VeiculoEvento> CreateMany()
+        public IList<VeiculoEvento> CreateMany(int quantidade = 2)
         {
             return new Faker<VeiculoEvento>()
                 .RuleFor(p => p.Acao, f => acao ?? (EAcaoVeiculoEvento)f.Random.Int(0, 3))
                 .RuleFor(p => p.Data, f => data ?? DateTime.Now)
                 .RuleFor(p => p.PlacaVeiculo, f => placa ?? "RIO2B25")
-                .Generate(2);
+                .Generate(quantidade);
         }
 
 

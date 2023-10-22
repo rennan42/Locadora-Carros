@@ -27,7 +27,7 @@ namespace LocadoraCarros.UnitTests.Veiculos.Comandos
             publisherMock.Setup(p => p.Publish(It.IsAny<AlterarStatusVeiculoEvent>(), CancellationToken.None))
                          .Returns(Task.CompletedTask);
 
-            var handler = new RemoverVeiculoComandoHandler(veiculoRepositorioMock.Object, publisherMock.Object);
+            var handler = new RemoverVeiculoComandoHandler(veiculoRepositorioMock.Object, publisherMock.Object, validatorMock.Object);
 
             await handler.Handle(comando, CancellationToken.None);
 

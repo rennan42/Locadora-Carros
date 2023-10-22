@@ -2,8 +2,8 @@
 {
     public enum EModeloVeiculo
     {
-        HATCH = 0,
-        SEDAN = 1,
-        SUV = 2,
+        HATCH = 1,
+        SEDAN = 2,
+        SUV = 3,
     }
 }

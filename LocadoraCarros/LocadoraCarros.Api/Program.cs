@@ -1,5 +1,7 @@
 using LocadoraCarros.Api.Configuracao;
 using LocadoraCarros.Application;
+using LocadoraCarros.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocadoraCarros.Api", Version = "v1" });
 });
+
+builder.Services.BuildServiceProvider()
+                .GetService<Contexto>().Database
+                .Migrate();
 
 var app = builder.Build();
 
@@ -32,3 +38,4 @@ app.MapControllers();
 app.UseMiddleware(typeof(ExceptionMiddleware));
 
 app.Run();
+public partial class Program { }

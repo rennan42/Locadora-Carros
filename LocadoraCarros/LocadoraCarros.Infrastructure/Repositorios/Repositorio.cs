@@ -31,7 +31,7 @@ namespace LocadoraCarros.Infrastructure.Repositorios
 
         public async Task<TEntity> ObterPorId(long id)
         {
-            return await DbSet.FindAsync(id);
+            return await DbSet.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<TEntity>> ObterTodos()
