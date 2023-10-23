@@ -109,7 +109,7 @@ namespace LocadoraCarros.IntegrationTests.Controllers
             var response = await Client.PostAsJsonAsync("/api/veiculo", request);
             var respostaEsperada = new List<string>
             {
-                "Status não permitido, escolha um modelo válido: 1-Disponivel, 2-Alugado.",
+                "Status não permitido, escolha um status válido: 1-Disponivel, 2-Alugado.",
             };
             ValidarMensagemErro(respostaEsperada, response);
         }

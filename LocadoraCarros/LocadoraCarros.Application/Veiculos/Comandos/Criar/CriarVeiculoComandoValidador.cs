@@ -33,7 +33,7 @@ namespace LocadoraCarros.Application.Veiculos.Comandos.Criar
                 .NotEmpty()
                 .WithMessage("Campo Status é obrigatório.")
                 .Must(ValidarSeStatusExiste)
-                .WithMessage("Status não permitido, escolha um modelo válido: 1-Disponivel, 2-Alugado.");
+                .WithMessage("Status não permitido, escolha um status válido: 1-Disponivel, 2-Alugado.");
 
         }
 
